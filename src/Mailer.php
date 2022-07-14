@@ -88,7 +88,7 @@ final class Mailer
     public function translatorCategory(string $value): self
     {
         $new = clone $this;
-        $new->translator =  $this->translator->withCategory($value);
+        $new->translator = $this->translator->withCategory($value);
 
         return $new;
     }
