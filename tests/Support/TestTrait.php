@@ -113,7 +113,7 @@ trait TestTrait
             TranslatorInterface::class => [
                 'class' => Translator::class,
                 '__construct()' => ['en'],
-                'addCategorySource()' => [Reference::to('translation.test')]
+                'addCategorySource()' => [Reference::to('translation.test')],
             ],
 
             TransportInterface::class => $params['yiisoft/mailer']['useSendmail']
