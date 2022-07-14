@@ -1,5 +1,5 @@
 {
-    "name": "forge/sevice",
+    "name": "forge/service",
     "type": "library",
     "description": "Servicios reutilizables para aplicaciones Yii3.",
     "keywords": [
