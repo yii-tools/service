@@ -8,7 +8,7 @@ jobs:
   phpunit:
     uses: php-forge/reusable-actions/.github/workflows/phpunit.yml@main
     with:
-      extensions: intl
+      extensions: fileinfo, intl
       os: >-
         ['ubuntu-latest', 'windows-latest']
       php: >-
