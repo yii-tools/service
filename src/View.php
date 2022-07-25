@@ -83,7 +83,6 @@ final class View implements ViewContextInterface
 
     public function withViewPath(string $value): self
     {
-
         $new = clone $this;
         $new->viewPath = $value;
 
