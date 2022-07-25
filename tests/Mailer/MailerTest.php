@@ -27,7 +27,7 @@ final class MailerTest extends TestCase
                 )
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
-                ->signatureImage($this->aliases->get('@resources/data/foo.txt'))
+                ->signatureImage('@resources/data/foo.txt')
                 ->signatureText('Signature')
                 ->subject('Test subject')
                 ->send('test@example.com', ['body' => 'Test body', 'username' => 'Test username'])
@@ -45,7 +45,7 @@ final class MailerTest extends TestCase
         $this->assertFalse(
             $this->mailer
                 ->from('admin@example.com')
-                ->signatureImage($this->aliases->get('@resources/data/foo.txt'))
+                ->signatureImage('@resources/data/foo.txt')
                 ->subject('Test subject')
                 ->send('test@example.com', ['body' => 'Test body', 'username' => 'Test username'])
         );

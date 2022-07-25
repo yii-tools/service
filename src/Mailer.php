@@ -7,6 +7,7 @@ namespace Forge\Service;
 use Exception;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Mailer\File;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Mailer\MessageBodyTemplate;
@@ -26,6 +27,7 @@ final class Mailer
     private string $viewPath = '';
 
     public function __construct(
+        private Aliases $aliases,
         private LoggerInterface $logger,
         private MailerInterface $mailer,
         private TranslatorInterface $translator
@@ -63,8 +65,13 @@ final class Mailer
 
     public function signatureImage(string $value): self
     {
+        $value = $this->aliases->get($value);
+
         $new = clone $this;
-        $new->signatureImage = File::fromPath($value, basename($value), mime_content_type($value));
+
+        if ('' !== $value) {
+            $new->signatureImage = File::fromPath($value, basename($value), mime_content_type($value));
+        }
 
         return $new;
     }
@@ -88,7 +95,10 @@ final class Mailer
     public function translatorCategory(string $value): self
     {
         $new = clone $this;
-        $new->translator = $this->translator->withCategory($value);
+
+        if ('' !== $value) {
+            $new->translator = $this->translator->withCategory($value);
+        }
 
         return $new;
     }
@@ -98,7 +108,7 @@ final class Mailer
         $new = clone $this;
 
         $new->mailer = $new->mailer->withTemplate(
-            new MessageBodyTemplate($value)
+            new MessageBodyTemplate($this->aliases->get($value))
         );
 
         return $new;
