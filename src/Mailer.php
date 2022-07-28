@@ -14,6 +14,9 @@ use Yiisoft\Mailer\MessageBodyTemplate;
 use Yiisoft\Mailer\MessageInterface;
 use Yiisoft\Translator\TranslatorInterface;
 
+use function basename;
+use function mime_content_type;
+
 final class Mailer
 {
     private array $attachments = [];
