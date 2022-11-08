@@ -13,7 +13,7 @@
         "php": "^8.0",
         "psr/http-message": "^1.0",
         "psr/log": "^3.0",
-        "yiisoft/aliases": "^2.0",
+        "yiisoft/aliases": "^3.0",
         "yiisoft/data-response": "^1.0",
         "yiisoft/mailer-symfony": "^2.0",
         "yiisoft/translator": "^1.0"
