@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yii\Service;
 
 use Exception;
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Mailer\File;

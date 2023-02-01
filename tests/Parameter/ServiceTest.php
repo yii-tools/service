@@ -6,9 +6,6 @@ namespace Yii\Service\Tests\Parameter;
 
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
-use Yii\Support\Assert;
-
-use function json_encode;
 
 final class ServiceTest extends TestCase
 {

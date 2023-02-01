@@ -126,7 +126,7 @@ trait TestTrait
             ParameterService::class => [
                 'class' => ParameterService::class,
                 '__construct()' => [
-                    $this->parameters()
+                    $this->parameters(),
                 ],
             ],
 
