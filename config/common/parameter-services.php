@@ -9,8 +9,6 @@ use Yii\Service\ParameterService;
 return [
     ParameterService::class => [
         'class' => ParameterService::class,
-        '__construct()' => [
-            $config->get('parameters'),
-        ],
+        '__construct()' => [$config->get('application-params')],
     ],
 ];

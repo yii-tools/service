@@ -125,9 +125,7 @@ trait TestTrait
 
             ParameterService::class => [
                 'class' => ParameterService::class,
-                '__construct()' => [
-                    $this->parameters(),
-                ],
+                '__construct()' => [$this->applicationParams()],
             ],
 
             TranslatorInterface::class => [
@@ -164,6 +162,16 @@ trait TestTrait
         ];
     }
 
+    private function applicationParams(): array
+    {
+        return [
+            'app' => [
+                'name' => 'Yii Demo',
+                'adminEmail' => 'test@example.com',
+            ],
+        ];
+    }
+
     private function params(): array
     {
         return [
@@ -185,16 +193,6 @@ trait TestTrait
                     'password' => '',
                     'options' => [], // See: https://symfony.com/doc/current/mailer.html#tls-peer-verification
                 ],
-            ],
-        ];
-    }
-
-    private function parameters(): array
-    {
-        return [
-            'app' => [
-                'name' => 'Yii Demo',
-                'adminEmail' => 'test@example.com',
             ],
         ];
     }
