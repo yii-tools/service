@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Yii\Service\Tests\Mailer;
 
-use HttpSoft\Message\UploadedFile;
 use PHPUnit\Framework\TestCase;
-use Yii\Service\Tests\Support;
+use Yii\Service\Tests\Support\TestTrait;
+use Yii\Support\Assert;
 
-final class MailerTest extends TestCase
+use function json_encode;
+
+final class ServiceTest extends TestCase
 {
-    use Support\TestTrait;
-
-    protected bool $writeToFiles = true;
+    use TestTrait;
 
     public function testMailer(): void
     {
@@ -20,23 +20,17 @@ final class MailerTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachments(
-                    [
-                        [new UploadedFile($this->aliases->get('@resources/data/foo.txt'), 0, UPLOAD_ERR_OK)],
-                    ]
-                )
+                ->attachmentsFromPath('@resources/data/test.txt')
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
-                ->signatureImage('@resources/data/foo.txt')
+                ->signatureImage('@resources/data/test.txt')
                 ->signatureText('Signature')
                 ->subject('Test subject')
                 ->send('test@example.com', ['body' => 'Test body', 'username' => 'Test username'])
         );
-
-        unset($this->aliases, $this->mailer);
     }
 
-    public function testMailerFailer(): void
+    public function testMailerFailed(): void
     {
         $this->writeToFiles = false;
 
@@ -45,11 +39,11 @@ final class MailerTest extends TestCase
         $this->assertFalse(
             $this->mailer
                 ->from('admin@example.com')
-                ->signatureImage('@resources/data/foo.txt')
+                ->signatureImage('@resources/data/test.txt')
                 ->subject('Test subject')
                 ->send('test@example.com', ['body' => 'Test body', 'username' => 'Test username'])
         );
 
-        unset($this->aliases, $this->mailer);
+        $this->assertCount(2, Assert::inaccessibleProperty($this->logger, 'messages'));
     }
 }

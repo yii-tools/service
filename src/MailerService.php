@@ -37,10 +37,10 @@ final class MailerService
     ) {
     }
 
-    public function attachments(array $values): self
+    public function attachmentsFromPath(string $value): self
     {
         $new = clone $this;
-        $new->attachments = $values;
+        $new->attachments[] = $this->aliases->get($value);
 
         return $new;
     }
@@ -72,7 +72,7 @@ final class MailerService
 
         $new = clone $this;
 
-        if ('' !== $value) {
+        if ($value !== '') {
             $new->signatureImage = File::fromPath($value, basename($value), mime_content_type($value));
         }
 
@@ -136,20 +136,11 @@ final class MailerService
             ->withSubject($this->subject)
             ->withTo($email);
 
-        /** @var array $attachment */
+        /** @psalm-var string[] $attachment */
         foreach ($this->attachments as $attachment) {
-            /** @var UploadedFileInterface $file */
-            foreach ($attachment as $file) {
-                if ($file->getError() === UPLOAD_ERR_OK) {
-                    $message = $message->withAttached(
-                        File::fromContent(
-                            (string) $file->getStream(),
-                            $file->getClientFilename(),
-                            $file->getClientMediaType()
-                        )
-                    );
-                }
-            }
+            $message = $message->withAttached(
+                File::fromPath($attachment, basename($attachment), mime_content_type($attachment))
+            );
         }
 
         return $this->sendInternal($message);
@@ -159,12 +150,13 @@ final class MailerService
     {
         $result = false;
 
-        if (null !== $this->signatureImage) {
+        if ($this->signatureImage !== null) {
             $message = $message->withEmbedded($this->signatureImage);
         }
 
         try {
             $this->mailer->send($message);
+
             $result = true;
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
