@@ -68,11 +68,10 @@ final class MailerService
 
     public function signatureImage(string $value): self
     {
-        $value = $this->aliases->get($value);
-
         $new = clone $this;
 
         if ($value !== '') {
+            $value = $this->aliases->get($value);
             $new->signatureImage = File::fromPath($value, basename($value), mime_content_type($value));
         }
 
@@ -99,7 +98,7 @@ final class MailerService
     {
         $new = clone $this;
 
-        if ('' !== $value) {
+        if ($value !== '') {
             $new->translator = $this->translator->withDefaultCategory($value);
         }
 
