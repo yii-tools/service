@@ -3,11 +3,10 @@
 declare(strict_types=1);
 
 /**
- * @var string $name
- * @var string $content
+ * @var \Yiisoft\Translator\TranslatorInterface $translator Translator instance.
+ * @var array $params
  */
 ?>
 
-<?= $params['body'] ?>
-
-<p><?= $params['username'] ?></p>
+<?= $translator->translate($params['message'])  ?>
+<p><?= $translator->translate($params['username']) ?></p>

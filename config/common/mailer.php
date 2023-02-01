@@ -2,17 +2,24 @@
 
 declare(strict_types=1);
 
-use Forge\Service\Mailer;
-
-/** @var array $params */
+use Yii\Service\MailerService;
+use Yii\Service\ParameterService;
 
 return [
-    Mailer::class => [
-        'class' => Mailer::class,
-        'from()' => [$params['forge']['mailer']['from'] ?? ''],
-        'signatureImage()' => [$params['forge']['mailer']['signatureImage'] ?? ''],
-        'signatureText()' => [$params['forge']['mailer']['signatureText'] ?? ''],
-        'translatorCategory()' => [$params['forge']['mailer']['translatorCategory'] ?? ''],
-        'viewPath()' => [$params['forge']['mailer']['viewPath'] ?? ''],
+    MailerService::class => [
+        'class' => MailerService::class,
+        'from()' => static fn (ParameterService $parameter) => $parameter->get('app.mailer.from', ''),
+        'signatureImage()' => static fn (ParameterService $parameter) => $parameter->get(
+            'service.mailer.signatureImage'
+        ),
+        'signatureText()' => static fn (ParameterService $parameter) => $parameter->get(
+            'service.mailer.signatureText'
+        ),
+        'translatorCategory()' => static fn (ParameterService $parameter) => $parameter->get(
+            'service.mailer.translatorCategory'
+        ),
+        'viewPath()' => static fn (ParameterService $parameter) => $parameter->get(
+            'service.mailer.viewPath'
+        ),
     ],
 ];

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Forge\Service\Tests\Support;
+namespace Yii\Service\Tests\Support;
 
-use Forge\Service\Mailer as MailerService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\Mailer\Transport\Dsn;
 use Symfony\Component\Mailer\Transport\SendmailTransport;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
 use Symfony\Component\Mailer\Transport\TransportInterface;
+use Yii\Service\MailerService;
+use Yii\Service\ParameterService;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Definitions\Reference;
@@ -20,6 +20,7 @@ use Yiisoft\Di\Container;
 use Yiisoft\Di\ContainerConfig;
 use Yiisoft\EventDispatcher\Dispatcher\Dispatcher;
 use Yiisoft\EventDispatcher\Provider\Provider;
+use Yiisoft\Log\Logger;
 use Yiisoft\Mailer\FileMailer;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Mailer\MessageBodyRenderer;
@@ -29,7 +30,7 @@ use Yiisoft\Mailer\MessageFactoryInterface;
 use Yiisoft\Mailer\Symfony\Mailer;
 use Yiisoft\Mailer\Symfony\Message;
 use Yiisoft\Translator\CategorySource;
-use Yiisoft\Translator\Formatter\Intl\IntlMessageFormatter;
+use Yiisoft\Translator\IntlMessageFormatter;
 use Yiisoft\Translator\Message\Php\MessageSource;
 use Yiisoft\Translator\MessageFormatterInterface;
 use Yiisoft\Translator\Translator;
@@ -39,7 +40,17 @@ use Yiisoft\View\View;
 trait TestTrait
 {
     protected Aliases $aliases;
+    protected LoggerInterface $logger;
     protected MailerService $mailer;
+    protected ParameterService $parameter;
+    private bool $writeToFiles = true;
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        unset($this->aliases, $this->logger, $this->mailer);
+    }
 
     protected function createContainer(): void
     {
@@ -48,7 +59,9 @@ trait TestTrait
         );
 
         $this->aliases = $container->get(Aliases::class);
+        $this->logger = $container->get(LoggerInterface::class);
         $this->mailer = $container->get(MailerService::class);
+        $this->parameter = $container->get(ParameterService::class);
     }
 
     private function config(): array
@@ -80,7 +93,7 @@ trait TestTrait
 
             ListenerProviderInterface::class => Provider::class,
 
-            LoggerInterface::class => NullLogger::class,
+            LoggerInterface::class => Logger::class,
 
             MailerInterface::class => $this->writeToFiles ? FileMailer::class : Mailer::class,
 
@@ -110,10 +123,17 @@ trait TestTrait
                 ],
             ],
 
+            ParameterService::class => [
+                'class' => ParameterService::class,
+                '__construct()' => [
+                    $this->parameters(),
+                ],
+            ],
+
             TranslatorInterface::class => [
                 'class' => Translator::class,
                 '__construct()' => ['en'],
-                'addCategorySource()' => [Reference::to('translation.test')],
+                'addCategorySources()' => [Reference::to('translation.test')],
             ],
 
             TransportInterface::class => $params['yiisoft/mailer']['useSendmail']
@@ -165,6 +185,16 @@ trait TestTrait
                     'password' => '',
                     'options' => [], // See: https://symfony.com/doc/current/mailer.html#tls-peer-verification
                 ],
+            ],
+        ];
+    }
+
+    private function parameters(): array
+    {
+        return [
+            'app' => [
+                'name' => 'Yii Demo',
+                'adminEmail' => 'test@example.com',
             ],
         ];
     }

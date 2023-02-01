@@ -1,59 +1,74 @@
 <p align="center">
-    <a href="https://github.com/php-forge/service" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/103309199?s=400&u=ca3561c692f53ed7eb290d3bb226a2828741606f&v=4" height="100px">
+    <a href="https://github.com/yii-tools/service" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/121752654?s=200&v=4" height="100px">
     </a>
-    <h1 align="center">PHP Forge - Service</h1>
+    <h1 align="center">Service for YiiFramework v.3.0.</h1>
     <br>
 </p>
 
-[![Build Status](https://github.com/php-forge/service/workflows/build/badge.svg)](https://github.com/php-forge/service/actions?query=workflow%3Abuild)
-[![codecov](https://codecov.io/gh/php-forge/service/branch/main/graph/badge.svg?token=KB6T5KMGED)](https://codecov.io/gh/php-forge/service)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fphp-forge%2Fservice%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/php-forge/service/main)
-[![static analysis](https://github.com/php-forge/service/workflows/static%20analysis/badge.svg)](https://github.com/php-forge/service/actions?query=workflow%3A%22static+analysis%22)
-[![type-coverage](https://shepherd.dev/github/php-forge/service/coverage.svg)](https://shepherd.dev/github/php-forge/service)
+## Requirements
 
-## Instalación
+The minimun version of PHP required by this package is PHP 8.1.
 
-```shell
-composer require forge/service
-```
+For install this package, you need [composer](https://getcomposer.org/), and fileinfo PHP extension.
 
-## Análisis estático
-
-El código se analiza estáticamente con [Psalm](https://psalm.dev/docs). Para ejecutarlo:
+## Install
 
 ```shell
-./vendor/bin/psalm
+composer require yii-tools/service
 ```
 
-## Pruebas de mutación
+## Usage
 
-Las pruebas de mutación se comprueban con [Infection](https://infection.github.io/). Para ejecutarlo:
+For use this package, you need read the [docs](docs/index.md).
+
+## Checking dependencies
+
+This package uses [composer-require-checker](https://github.com/maglnet/ComposerRequireChecker) to check if all dependencies are correctly defined in `composer.json`.
+
+To run the checker, execute the following command:
 
 ```shell
-./vendor/bin/roave-infection-static-analysis-plugin
+composer run check-dependencies
 ```
 
-## Pruebas unitarias
+## Mutation testing
 
-Las pruebas unitarias se comprueban con [PHPUnit](https://phpunit.de/). Para ejecutarlo:
+Mutation testing is checked with [Infection](https://infection.github.io/). To run it:
 
 ```shell
-./vendor/bin/phpunit
+composer run mutation
 ```
 
-## Calidad y estilo de código
+## Static analysis
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dde85db828f7434180305ef8046d6e15)](https://www.codacy.com/gh/php-forge/service/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=php-forge/service&amp;utm_campaign=Badge_Grade)
+The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
+
+```shell
+composer run psalm
+```
+
+## Testing
+
+The code is tested with [PHPUnit](https://phpunit.de/). To run tests:
+
+```
+composer run test
+```
+
+## CI status
+
+[![build](https://github.com/yii-tools/service/actions/workflows/build.yml/badge.svg)](https://github.com/yii-tools/service/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/yii-tools/service/branch/main/graph/badge.svg?token=MF0XUGVLYC)](https://codecov.io/gh/yii-tools/service)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyii-tools%2Fservice%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/yii-tools/service/main)
+[![static analysis](https://github.com/yii-tools/service/actions/workflows/static.yml/badge.svg)](https://github.com/yii-tools/service/actions/workflows/static.yml)
+[![type-coverage](https://shepherd.dev/github/yii-tools/service/coverage.svg)](https://shepherd.dev/github/yii-tools/service)
 [![StyleCI](https://github.styleci.io/repos/513988564/shield?branch=main)](https://github.styleci.io/repos/513988564?branch=main)
 
-## Licencia
+## License
 
-El paquete `php-forge/service` es software libre. Se publica bajo los términos de la Licencia BSD.
-Consulte [`LICENSE`](./LICENSE.md) para obtener más información.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-Mantenido por [Terabytesoftw](https://github.com/terabytesoftw).
+## Our social networks
 
-## Nuestras redes sociales
-
-[![Twitter](https://img.shields.io/badge/twitter-follow-1DA1F2?logo=twitter&logoColor=1DA1F2&labelColor=555555?style=flat)](https://twitter.com/PhpForge)
+[![Twitter](https://img.shields.io/badge/twitter-follow-1DA1F2?logo=twitter&logoColor=1DA1F2&labelColor=555555?style=flat)](https://twitter.com/Terabytesoftw)

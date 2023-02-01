@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Forge\Service;
+namespace Yii\Service;
 
 use Exception;
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Mailer\File;
@@ -17,8 +16,9 @@ use Yiisoft\Translator\TranslatorInterface;
 use function basename;
 use function mime_content_type;
 
-final class Mailer
+final class MailerService
 {
+    /** @psalm-var string[] */
     private array $attachments = [];
     private string $from = '';
     /** @psalm-var array<string, string>|string|null */
@@ -37,10 +37,10 @@ final class Mailer
     ) {
     }
 
-    public function attachments(array $values): self
+    public function attachmentsFromPath(string $value): self
     {
         $new = clone $this;
-        $new->attachments = $values;
+        $new->attachments[] = $this->aliases->get($value);
 
         return $new;
     }
@@ -68,11 +68,10 @@ final class Mailer
 
     public function signatureImage(string $value): self
     {
-        $value = $this->aliases->get($value);
-
         $new = clone $this;
 
-        if ('' !== $value) {
+        if ($value !== '') {
+            $value = $this->aliases->get($value);
             $new->signatureImage = File::fromPath($value, basename($value), mime_content_type($value));
         }
 
@@ -99,8 +98,8 @@ final class Mailer
     {
         $new = clone $this;
 
-        if ('' !== $value) {
-            $new->translator = $this->translator->withCategory($value);
+        if ($value !== '') {
+            $new->translator = $this->translator->withDefaultCategory($value);
         }
 
         return $new;
@@ -136,20 +135,10 @@ final class Mailer
             ->withSubject($this->subject)
             ->withTo($email);
 
-        /** @var array $attachment */
         foreach ($this->attachments as $attachment) {
-            /** @var UploadedFileInterface $file */
-            foreach ($attachment as $file) {
-                if ($file->getError() === UPLOAD_ERR_OK) {
-                    $message = $message->withAttached(
-                        File::fromContent(
-                            (string) $file->getStream(),
-                            $file->getClientFilename(),
-                            $file->getClientMediaType()
-                        )
-                    );
-                }
-            }
+            $message = $message->withAttached(
+                File::fromPath($attachment, basename($attachment), mime_content_type($attachment))
+            );
         }
 
         return $this->sendInternal($message);
@@ -159,12 +148,13 @@ final class Mailer
     {
         $result = false;
 
-        if (null !== $this->signatureImage) {
+        if ($this->signatureImage !== null) {
             $message = $message->withEmbedded($this->signatureImage);
         }
 
         try {
             $this->mailer->send($message);
+
             $result = true;
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
