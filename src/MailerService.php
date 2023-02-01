@@ -18,6 +18,7 @@ use function mime_content_type;
 
 final class MailerService
 {
+    /** @psalm-var string[] */
     private array $attachments = [];
     private string $from = '';
     /** @psalm-var array<string, string>|string|null */
@@ -135,7 +136,6 @@ final class MailerService
             ->withSubject($this->subject)
             ->withTo($email);
 
-        /** @psalm-var string[] $attachment */
         foreach ($this->attachments as $attachment) {
             $message = $message->withAttached(
                 File::fromPath($attachment, basename($attachment), mime_content_type($attachment))
