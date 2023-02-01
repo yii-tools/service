@@ -20,7 +20,7 @@ composer require yii-tools/service
 
 ## Usage
 
-For usege this package, you need read the [docs](docs/index.md).
+For use this package, you need read the [docs](docs/index.md).
 
 ## Checking dependencies
 
