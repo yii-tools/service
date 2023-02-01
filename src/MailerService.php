@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Forge\Service;
+namespace Yii\Service;
 
 use Exception;
 use Psr\Http\Message\UploadedFileInterface;
@@ -17,7 +17,7 @@ use Yiisoft\Translator\TranslatorInterface;
 use function basename;
 use function mime_content_type;
 
-final class Mailer
+final class MailerService
 {
     private array $attachments = [];
     private string $from = '';
@@ -100,7 +100,7 @@ final class Mailer
         $new = clone $this;
 
         if ('' !== $value) {
-            $new->translator = $this->translator->withCategory($value);
+            $new->translator = $this->translator->withDefaultCategory($value);
         }
 
         return $new;

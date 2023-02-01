@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Forge\Service\Tests\Mailer;
+namespace Yii\Service\Tests\Mailer;
 
-use Forge\Service\Tests\Support;
 use PHPUnit\Framework\TestCase;
+use Yii\Service\Tests\Support\TestTrait;
 
 final class ImmutabilityTest extends TestCase
 {
-    use Support\TestTrait;
+    use TestTrait;
 
     protected bool $writeToFiles = true;
 
@@ -18,6 +18,7 @@ final class ImmutabilityTest extends TestCase
         $this->createContainer();
 
         $mailer = $this->mailer;
+
         $this->assertNotSame($mailer, $mailer->attachments([]));
         $this->assertNotSame($mailer, $mailer->from(''));
         $this->assertNotSame($mailer, $mailer->layout([]));

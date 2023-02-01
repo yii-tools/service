@@ -2,12 +2,15 @@
     "source": {
         "directories": [
             "src"
-        ]
+        ],
+        "excludes": [
+            "Asset"
+        ],
     },
     "logs": {
         "text": "php:\/\/stderr",
         "stryker": {
-            "report": "master"
+            "report": "main"
         }
     },
     "mutators": {

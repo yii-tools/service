@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Forge\Service\Tests\Mailer;
+namespace Yii\Service\Tests\Mailer;
 
-use Forge\Service\Tests\Support;
-use Nyholm\Psr7\UploadedFile;
+use HttpSoft\Message\UploadedFile;
 use PHPUnit\Framework\TestCase;
+use Yii\Service\Tests\Support;
 
 final class MailerTest extends TestCase
 {

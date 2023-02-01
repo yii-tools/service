@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Forge\Service\Mailer;
+use Yii\Service\Mailer;
 
 /** @var array $params */
 
