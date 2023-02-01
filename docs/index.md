@@ -139,7 +139,6 @@ declare(strict_types=1);
  */
 
 $this->setTitle($parameterService->get('app.name'));
-
 ?>
 
 <h1><?= $this->getTitle() ?></h1>
