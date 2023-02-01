@@ -12,10 +12,12 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0",
+        "ext-fileinfo": "*",
         "psr/http-message": "^1.0",
         "psr/log": "^3.0",
         "yiisoft/aliases": "^2.0",
         "yiisoft/data-response": "^1.0",
+        "yiisoft/mailer": "^5.0",
         "yiisoft/mailer-symfony": "^2.1",
         "yiisoft/translator": "^2.2"
     },
