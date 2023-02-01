@@ -15,11 +15,11 @@ return [
     ) {
         $mailer = new MailerService($aliases, $logger, $mailer, $translator);
 
-        $mailer->from($parameter->get('yii-tools.service.mailer.from', ''));
-        $mailer->signatureImage($parameter->get('yii-tools.service.mailer.signatureImage', ''));
-        $mailer->signatureText($parameter->get('yii-tools.service.mailer.signatureText', ''));
-        $mailer->translatorCategory($parameter->get('yii-tools.service.mailer.translatorCategory', ''));
-        $mailer->viewPath($parameter->get('yii-tools.service.mailer.viewPath', ''));
+        $mailer->from($parameter->get('yii-tools.service.mailer.from'));
+        $mailer->signatureImage($parameter->get('yii-tools.service.mailer.signatureImage'));
+        $mailer->signatureText($parameter->get('yii-tools.service.mailer.signatureText'));
+        $mailer->translatorCategory($parameter->get('yii-tools.service.mailer.translatorCategory'));
+        $mailer->viewPath($parameter->get('yii-tools.service.mailer.viewPath'));
 
         return $mailer;
     },

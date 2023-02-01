@@ -3,13 +3,15 @@
 declare(strict_types=1);
 
 return [
-    'service' => [
-        'mailer' => [
-            'from' => '',
-            'signatureImage' => '',
-            'signatureText' => '',
-            'translatorCategory' => '',
-            'viewPath' => '',
+    'yii-tools' => [
+        'service' => [
+            'mailer' => [
+                'from' => '',
+                'signatureImage' => '',
+                'signatureText' => '',
+                'translatorCategory' => '',
+                'viewPath' => '',
+            ],
         ],
     ],
 ];
