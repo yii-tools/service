@@ -53,12 +53,12 @@ final class ContactController
 
 ## Parameter service
 
-The parameter service will help you to get parameters from the configuration file `config/parameters.php`.
+The parameter service will help you to get parameters from the configuration file `config/application-params.php`.
 
-Define parameters in the configuration file `config/parameters.php`:
+Define parameters in the configuration file `config/application-params.php`:
 
 ```php
-file: `config/parameters.php`
+file: `config/application-params.php`
 
 <?php
 

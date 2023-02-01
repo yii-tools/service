@@ -50,11 +50,9 @@
             "source-directory": "config"
         },
         "config-plugin": {
+            "application-params": "?application-params.php",
             "common": [
                 "common/*.php"
-            ],
-            "parameters": [
-                "?parameters.php"
             ]
         }
     },
