@@ -37,14 +37,26 @@ final class MailerService
     ) {
     }
 
-    public function attachmentsFromPath(string $value): self
+    /**
+     * Returns a new instance with the specified attachments.
+     *
+     * @param array $value Attachments.
+     *
+     * @psalm-param string[] $value
+     */
+    public function attachments(array $value): self
     {
         $new = clone $this;
-        $new->attachments[] = $this->aliases->get($value);
+        $new->attachments = $value;
 
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified from.
+     *
+     * @param string $value From.
+     */
     public function from(string $value): self
     {
         $new = clone $this;
@@ -54,7 +66,9 @@ final class MailerService
     }
 
     /**
-     * @param array $value
+     * Returns a new instance with the specified layout.
+     *
+     * @param array $value Layout.
      *
      * @psalm-param array<string, string>|string|null $value
      */
@@ -66,6 +80,11 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified signature image.
+     *
+     * @param string $value Signature image.
+     */
     public function signatureImage(string $value): self
     {
         $new = clone $this;
@@ -78,6 +97,11 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified signature text.
+     *
+     * @param string $value Signature text.
+     */
     public function signatureText(string $value): self
     {
         $new = clone $this;
@@ -86,6 +110,11 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified subject.
+     *
+     * @param string $value Subject.
+     */
     public function subject(string $value): self
     {
         $new = clone $this;
@@ -94,6 +123,11 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified translator category.
+     *
+     * @param string $value Translator category.
+     */
     public function translatorCategory(string $value): self
     {
         $new = clone $this;
@@ -105,6 +139,11 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Returns a new instance with the specified view path.
+     *
+     * @param string $value View path.
+     */
     public function viewPath(string $value): self
     {
         $new = clone $this;
@@ -116,6 +155,12 @@ final class MailerService
         return $new;
     }
 
+    /**
+     * Sends an email.
+     *
+     * @param string $email Email.
+     * @param array $params Params.
+     */
     public function send(string $email, array $params = []): bool
     {
         $message = $this->mailer
@@ -136,8 +181,9 @@ final class MailerService
             ->withTo($email);
 
         foreach ($this->attachments as $attachment) {
+            $filename = $this->aliases->get($attachment);
             $message = $message->withAttached(
-                File::fromPath($attachment, basename($attachment), mime_content_type($attachment))
+                File::fromPath($filename, basename($filename), mime_content_type($filename))
             );
         }
 

@@ -18,7 +18,7 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachmentsFromPath('@resources/data/test.txt')
+                ->attachments(['@resources/data/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
                 ->signatureImage('@resources/data/test.txt')
@@ -51,7 +51,7 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachmentsFromPath('@resources/data/test.txt')
+                ->attachments(['@resources/data/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
                 ->signatureImage('')
@@ -67,7 +67,7 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachmentsFromPath('@resources/data/test.txt')
+                ->attachments(['@resources/data/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
                 ->signatureText('Signature')
