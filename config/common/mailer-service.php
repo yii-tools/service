@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LoggerInterface;
 use Yii\Service\MailerService;
 use Yii\Service\ParameterService;
+use Yiisoft\Aliases\Aliases;
+use Yiisoft\Mailer\MailerInterface;
+use Yiisoft\Translator\TranslatorInterface;
 
 return [
     MailerService::class => static function (
