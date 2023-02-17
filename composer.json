@@ -18,7 +18,7 @@
         "yiisoft/arrays": "^3.0",
         "yiisoft/data-response": "^1.0",
         "yiisoft/mailer": "^5.0",
-        "yiisoft/mailer-symfony": "^2.1",
+        "yiisoft/mailer-symfony": "^3.0",
         "yiisoft/translator": "^2.2"
     },
     "require-dev": {
