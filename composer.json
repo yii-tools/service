@@ -19,7 +19,7 @@
         "yiisoft/data-response": "^1.0",
         "yiisoft/mailer": "^5.0",
         "yiisoft/mailer-symfony": "^2.1",
-        "yiisoft/translator": "^2.2"
+        "yiisoft/translator": "^3.0"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^4.3",
