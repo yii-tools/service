@@ -11,26 +11,26 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-fileinfo": "*",
         "psr/log": "^3.0",
-        "yiisoft/aliases": "^2.0",
+        "yiisoft/aliases": "^3.0",
         "yiisoft/arrays": "^3.0",
-        "yiisoft/data-response": "^1.0",
+        "yiisoft/data-response": "^2.0",
         "yiisoft/mailer": "^5.0",
-        "yiisoft/mailer-symfony": "^2.1",
-        "yiisoft/translator": "^2.2"
+        "yiisoft/mailer-symfony": "^3.0",
+        "yiisoft/translator": "^3.0"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^4.3",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "roave/infection-static-analysis-plugin": "^1.28",
         "vimeo/psalm": "^5.4",
         "yii-tools/support": "^1.0@dev",
         "yiisoft/di": "^1.2",
         "yiisoft/log": "^2.0",
         "yiisoft/translator-message-php": "^1.1",
-        "yiisoft/yii-event": "^1.0"
+        "yiisoft/yii-event": "^2.0"
     },
     "autoload": {
         "psr-4": {
