@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<phpunit
-  bootstrap="vendor/autoload.php"
-  colors="true"
-  convertErrorsToExceptions="true"
-  convertNoticesToExceptions="true"
-  convertWarningsToExceptions="true"
-  stopOnFailure="false"
-  verbose="true"
->
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd">
   <php>
-    <ini name="error_reporting" value="-1" />
+    <ini name="error_reporting" value="-1"/>
   </php>
-
   <coverage>
     <include>
       <directory suffix=".php">./src</directory>
     </include>
   </coverage>
-
   <testsuites>
     <testsuite name="Service">
       <directory>./tests</directory>
