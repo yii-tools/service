@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Yii\Service\Tests\Support;
 
+use HttpSoft\Message\ResponseFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Transport\Dsn;
 use Symfony\Component\Mailer\Transport\SendmailTransport;
@@ -13,6 +15,7 @@ use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
 use Symfony\Component\Mailer\Transport\TransportInterface;
 use Yii\Service\MailerService;
 use Yii\Service\ParameterService;
+use Yii\Service\RedirectService;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Definitions\Reference;
@@ -29,6 +32,14 @@ use Yiisoft\Mailer\MessageFactory;
 use Yiisoft\Mailer\MessageFactoryInterface;
 use Yiisoft\Mailer\Symfony\Mailer;
 use Yiisoft\Mailer\Symfony\Message;
+use Yiisoft\Router\FastRoute\UrlGenerator;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\Route;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollector;
+use Yiisoft\Router\RouteCollectorInterface;
+use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\CategorySource;
 use Yiisoft\Translator\IntlMessageFormatter;
 use Yiisoft\Translator\Message\Php\MessageSource;
@@ -43,6 +54,7 @@ trait TestTrait
     protected LoggerInterface $logger;
     protected MailerService $mailer;
     protected ParameterService $parameter;
+    protected RedirectService $redirect;
     private bool $writeToFiles = true;
 
     protected function tearDown(): void
@@ -62,6 +74,7 @@ trait TestTrait
         $this->logger = $container->get(LoggerInterface::class);
         $this->mailer = $container->get(MailerService::class);
         $this->parameter = $container->get(ParameterService::class);
+        $this->redirect = $container->get(RedirectService::class);
     }
 
     private function config(): array
@@ -127,6 +140,15 @@ trait TestTrait
                 'class' => ParameterService::class,
                 '__construct()' => [$this->applicationParams()],
             ],
+
+            ResponseFactoryInterface::class => ResponseFactory::class,
+
+            RouteCollectionInterface::class => RouteCollection::class,
+
+            RouteCollectorInterface::class => static fn() => (new RouteCollector())
+                ->addGroup(Group::create()->routes(Route::get('/home/index')->name('home'))),
+
+            UrlGeneratorInterface::class => UrlGenerator::class,
 
             TranslatorInterface::class => [
                 'class' => Translator::class,
