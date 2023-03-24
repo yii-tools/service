@@ -19,10 +19,11 @@
         "yiisoft/aliases": "^3.0",
         "yiisoft/arrays": "^3.0",
         "yiisoft/data-response": "^2.0",
-        "yiisoft/mailer-symfony": "^3.0",
         "yiisoft/mailer": "^5.0",
+        "yiisoft/mailer-symfony": "^3.0",
         "yiisoft/router-fastroute": "^3.0",
         "yiisoft/router": "^3.0",
+        "yiisoft/session": "^2.0",
         "yiisoft/translator": "^3.0"
     },
     "require-dev": {
@@ -56,7 +57,7 @@
         },
         "config-plugin": {
             "application-params": "?application-params.php",
-            "common": [
+            "di": [
                 "common/*.php"
             ]
         }
