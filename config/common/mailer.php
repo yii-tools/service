@@ -21,9 +21,9 @@ return [
 
         return $mailer
             ->from($parameter->get('yii-tools.service.mailer.from', ''))
-            ->signatureImage($parameter->get('yii-tools.service.mailer.signature.image', ''))
-            ->signatureText($parameter->get('yii-tools.service.mailer.signature.text', ''))
-            ->translatorCategory($parameter->get('yii-tools.service.mailer.translator.category', ''))
-            ->viewPath($parameter->get('yii-tools.service.mailer.view.path', ''));
+            ->signatureImage($parameter->get('yii-tools.service.mailer.signature-image', ''))
+            ->signatureText($parameter->get('yii-tools.service.mailer.signature-text', ''))
+            ->translatorCategory($parameter->get('yii-tools.service.mailer.translator-category', ''))
+            ->viewPath($parameter->get('yii-tools.service.mailer.view-path', ''));
     },
 ];
