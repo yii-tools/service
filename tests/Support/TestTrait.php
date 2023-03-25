@@ -39,7 +39,7 @@ trait TestTrait
         );
 
         $mailerInterfaceOverride = [
-            MailerInterface::class => $this->writeToFiles ? FileMailer::class : SymfonyMailer::class
+            MailerInterface::class => $this->writeToFiles ? FileMailer::class : SymfonyMailer::class,
         ];
 
         $definitions = array_merge($config->get('di'), $mailerInterfaceOverride);
