@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Yiisoft\Router\UrlGeneratorInterface;
 
-final class RedirectService
+final class Redirect
 {
     public function __construct(
         private ResponseFactoryInterface $responseFactory,

@@ -7,7 +7,7 @@ namespace Yii\Service\Tests\Parameter;
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 
-final class ServiceTest extends TestCase
+final class Test extends TestCase
 {
     use TestTrait;
 

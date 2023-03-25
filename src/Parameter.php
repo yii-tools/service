@@ -27,7 +27,7 @@ use Yiisoft\Arrays\ArrayHelper;
  * }
  * ```
  */
-final class ParameterService
+final class Parameter
 {
     public function __construct(private array $parameters)
     {

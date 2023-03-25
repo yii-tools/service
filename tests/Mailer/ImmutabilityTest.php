@@ -20,7 +20,7 @@ final class ImmutabilityTest extends TestCase
         $this->assertNotSame($mailer, $mailer->attachments([]));
         $this->assertNotSame($mailer, $mailer->from(''));
         $this->assertNotSame($mailer, $mailer->layout([]));
-        $this->assertNotSame($mailer, $mailer->signatureImage('@resources/data/test.txt'));
+        $this->assertNotSame($mailer, $mailer->signatureImage('@resources/attachment/test.txt'));
         $this->assertNotSame($mailer, $mailer->signatureText(''));
         $this->assertNotSame($mailer, $mailer->subject(''));
         $this->assertNotSame($mailer, $mailer->translatorCategory('test'));

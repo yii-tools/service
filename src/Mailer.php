@@ -16,7 +16,7 @@ use Yiisoft\Translator\TranslatorInterface;
 use function basename;
 use function mime_content_type;
 
-final class MailerService
+final class Mailer
 {
     /** @psalm-var string[] */
     private array $attachments = [];

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 use Yii\Support\Assert;
 
-final class ServiceTest extends TestCase
+final class Test extends TestCase
 {
     use TestTrait;
 
@@ -18,12 +18,13 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachments(['@resources/data/test.txt'])
+                ->attachments(['@resources/attachment/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
-                ->signatureImage('@resources/data/test.txt')
+                ->signatureImage('@resources/attachment/test.txt')
                 ->signatureText('Signature')
                 ->subject('Test subject')
+                ->viewPath('@views')
                 ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username'])
         );
     }
@@ -37,8 +38,9 @@ final class ServiceTest extends TestCase
         $this->assertFalse(
             $this->mailer
                 ->from('admin@example.com')
-                ->signatureImage('@resources/data/test.txt')
+                ->signatureImage('@resources/attachment/test.txt')
                 ->subject('Test subject')
+                ->viewPath('@views')
                 ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username'])
         );
 
@@ -51,12 +53,13 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachments(['@resources/data/test.txt'])
+                ->attachments(['@resources/attachment/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
                 ->signatureImage('')
                 ->signatureText('Signature')
                 ->subject('Test subject')
+                ->viewPath('@views')
                 ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username'])
         );
     }
@@ -67,12 +70,13 @@ final class ServiceTest extends TestCase
 
         $this->assertTrue(
             $this->mailer
-                ->attachments(['@resources/data/test.txt'])
+                ->attachments(['@resources/attachment/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
                 ->signatureText('Signature')
                 ->subject('Test subject')
                 ->translatorCategory('')
+                ->viewPath('@views')
                 ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username'])
         );
     }
