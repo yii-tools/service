@@ -4,218 +4,52 @@ declare(strict_types=1);
 
 namespace Yii\Service\Tests\Support;
 
-use HttpSoft\Message\ResponseFactory;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\EventDispatcher\ListenerProviderInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Mailer\Transport\Dsn;
-use Symfony\Component\Mailer\Transport\SendmailTransport;
-use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
-use Symfony\Component\Mailer\Transport\TransportInterface;
-use Yii\Service\MailerService;
-use Yii\Service\ParameterService;
-use Yii\Service\RedirectService;
+use Yii\Service\Mailer;
+use Yii\Service\Parameter;
+use Yii\Service\Redirect;
 use Yiisoft\Aliases\Aliases;
-use Yiisoft\Definitions\DynamicReference;
-use Yiisoft\Definitions\Reference;
+use Yiisoft\Config\Config;
+use Yiisoft\Config\ConfigPaths;
 use Yiisoft\Di\Container;
 use Yiisoft\Di\ContainerConfig;
-use Yiisoft\EventDispatcher\Dispatcher\Dispatcher;
-use Yiisoft\EventDispatcher\Provider\Provider;
-use Yiisoft\Log\Logger;
 use Yiisoft\Mailer\FileMailer;
 use Yiisoft\Mailer\MailerInterface;
-use Yiisoft\Mailer\MessageBodyRenderer;
-use Yiisoft\Mailer\MessageBodyTemplate;
-use Yiisoft\Mailer\MessageFactory;
-use Yiisoft\Mailer\MessageFactoryInterface;
-use Yiisoft\Mailer\Symfony\Mailer;
-use Yiisoft\Mailer\Symfony\Message;
-use Yiisoft\Router\FastRoute\UrlGenerator;
-use Yiisoft\Router\Group;
-use Yiisoft\Router\Route;
-use Yiisoft\Router\RouteCollection;
-use Yiisoft\Router\RouteCollectionInterface;
-use Yiisoft\Router\RouteCollector;
-use Yiisoft\Router\RouteCollectorInterface;
-use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\Translator\CategorySource;
-use Yiisoft\Translator\IntlMessageFormatter;
-use Yiisoft\Translator\Message\Php\MessageSource;
-use Yiisoft\Translator\MessageFormatterInterface;
-use Yiisoft\Translator\Translator;
-use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\View\View;
+use Yiisoft\Mailer\Symfony\Mailer as SymfonyMailer;
 
 trait TestTrait
 {
-    protected Aliases $aliases;
-    protected LoggerInterface $logger;
-    protected MailerService $mailer;
-    protected ParameterService $parameter;
-    protected RedirectService $redirect;
-    private bool $writeToFiles = true;
+    private Aliases $aliases;
+    private LoggerInterface $logger;
+    private Mailer $mailer;
+    private Parameter $parameter;
+    private Redirect $redirect;
+    protected bool $writeToFiles = true;
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
-        parent::tearDown();
-
-        unset($this->aliases, $this->logger, $this->mailer);
+        unset($this->aliases, $this->logger, $this->mailer, $this->parameter, $this->redirect);
     }
 
-    protected function createContainer(): void
+    private function createContainer(): void
     {
-        $container = new Container(
-            ContainerConfig::create()->withDefinitions($this->config())
+        $config = new Config(
+            new ConfigPaths(dirname(__DIR__, 2), 'config', 'vendor'),
+            'tests',
         );
+
+        $mailerInterfaceOverride = [
+            MailerInterface::class => $this->writeToFiles ? FileMailer::class : SymfonyMailer::class
+        ];
+
+        $definitions = array_merge($config->get('di'), $mailerInterfaceOverride);
+        $containerConfig = ContainerConfig::create()->withDefinitions(array_merge($definitions));
+        $container = new Container($containerConfig);
 
         $this->aliases = $container->get(Aliases::class);
         $this->logger = $container->get(LoggerInterface::class);
-        $this->mailer = $container->get(MailerService::class);
-        $this->parameter = $container->get(ParameterService::class);
-        $this->redirect = $container->get(RedirectService::class);
-    }
-
-    private function config(): array
-    {
-        $params = $this->params();
-
-        return [
-            Aliases::class => [
-                'class' => Aliases::class,
-                '__construct()' => [
-                    [
-                        '@root' => __DIR__,
-                        '@resources' => '@root/resources',
-                        '@runtime' => '@root/runtime',
-                    ],
-                ],
-            ],
-
-            EventDispatcherInterface::class => Dispatcher::class,
-
-            FileMailer::class => [
-                'class' => FileMailer::class,
-                '__construct()' => [
-                    'path' => DynamicReference::to(fn (Aliases $aliases) => $aliases->get(
-                        $params['yiisoft/mailer']['fileMailer']['fileMailerStorage'],
-                    )),
-                ],
-            ],
-
-            ListenerProviderInterface::class => Provider::class,
-
-            LoggerInterface::class => Logger::class,
-
-            MailerInterface::class => $this->writeToFiles ? FileMailer::class : Mailer::class,
-
-            MessageBodyRenderer::class => [
-                'class' => MessageBodyRenderer::class,
-                '__construct()' => [
-                    Reference::to(View::class),
-                    DynamicReference::to(static fn (Aliases $aliases) => new MessageBodyTemplate(
-                        $aliases->get($params['yiisoft/mailer']['messageBodyTemplate']['viewPath']),
-                    )),
-                ],
-            ],
-
-            MessageFactoryInterface::class => [
-                'class' => MessageFactory::class,
-                '__construct()' => [
-                    Message::class,
-                ],
-            ],
-
-            MessageFormatterInterface::class => IntlMessageFormatter::class,
-
-            MessageReaderInterface::class => [
-                'class' => MessageSource::class,
-                '__construct()' => [
-                    DynamicReference::to(static fn (Aliases $aliases) => $aliases->get('@message')),
-                ],
-            ],
-
-            ParameterService::class => [
-                'class' => ParameterService::class,
-                '__construct()' => [$this->applicationParams()],
-            ],
-
-            ResponseFactoryInterface::class => ResponseFactory::class,
-
-            RouteCollectionInterface::class => RouteCollection::class,
-
-            RouteCollectorInterface::class => static fn() => (new RouteCollector())
-                ->addGroup(Group::create()->routes(Route::get('/home/index')->name('home'))),
-
-            UrlGeneratorInterface::class => UrlGenerator::class,
-
-            TranslatorInterface::class => [
-                'class' => Translator::class,
-                '__construct()' => ['en'],
-                'addCategorySources()' => [Reference::to('translation.test')],
-            ],
-
-            TransportInterface::class => $params['yiisoft/mailer']['useSendmail']
-                ? SendmailTransport::class
-                : static function (EsmtpTransportFactory $esmtpTransportFactory) use ($params): TransportInterface {
-                    return $esmtpTransportFactory->create(new Dsn(
-                        $params['symfony/mailer']['esmtpTransport']['scheme'],
-                        $params['symfony/mailer']['esmtpTransport']['host'],
-                        $params['symfony/mailer']['esmtpTransport']['username'],
-                        $params['symfony/mailer']['esmtpTransport']['password'],
-                        $params['symfony/mailer']['esmtpTransport']['port'],
-                        $params['symfony/mailer']['esmtpTransport']['options'],
-                    ));
-                },
-
-            View::class => [
-                'class' => View::class,
-                '__construct()' => [
-                    'basePath' => __DIR__ . '/resources/mail',
-                ],
-            ],
-
-            'translation.test' => static function (Aliases $aliases, MessageFormatterInterface $messageFormatter) {
-                $messageSource = new MessageSource($aliases->get('@resources'));
-
-                return new CategorySource('test', $messageSource, $messageFormatter);
-            },
-        ];
-    }
-
-    private function applicationParams(): array
-    {
-        return [
-            'app' => [
-                'name' => 'Yii Demo',
-                'adminEmail' => 'test@example.com',
-            ],
-        ];
-    }
-
-    private function params(): array
-    {
-        return [
-            'yiisoft/mailer' => [
-                'messageBodyTemplate' => [
-                    'viewPath' => '@resources/mail',
-                ],
-                'fileMailer' => [
-                    'fileMailerStorage' => '@runtime/mail',
-                ],
-                'useSendmail' => false,
-            ],
-            'symfony/mailer' => [
-                'esmtpTransport' => [
-                    'scheme' => 'smtps', // "smtps": using TLS, "smtp": without using TLS.
-                    'host' => 'smtp.example.com',
-                    'port' => 465,
-                    'username' => 'admin@example.com',
-                    'password' => '',
-                    'options' => [], // See: https://symfony.com/doc/current/mailer.html#tls-peer-verification
-                ],
-            ],
-        ];
+        $this->mailer = $container->get(Mailer::class);
+        $this->parameter = $container->get(Parameter::class);
+        $this->redirect = $container->get(Redirect::class);
     }
 }
