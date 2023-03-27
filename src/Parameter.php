@@ -27,7 +27,7 @@ use Yiisoft\Arrays\ArrayHelper;
  * }
  * ```
  */
-final class Parameter
+final class Parameter implements ParameterInterface
 {
     public function __construct(private array $parameters)
     {
