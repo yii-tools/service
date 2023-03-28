@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yii\Service\Tests\Parameter;
+namespace Yii\Service\Tests\Redirect;
 
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;

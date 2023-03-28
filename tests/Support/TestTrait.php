@@ -6,7 +6,7 @@ namespace Yii\Service\Tests\Support;
 
 use Psr\Log\LoggerInterface;
 use Yii\Service\Mailer;
-use Yii\Service\Parameter;
+use Yii\Service\ParameterInterface;
 use Yii\Service\Redirect;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Config\Config;
@@ -22,7 +22,7 @@ trait TestTrait
     private Aliases $aliases;
     private LoggerInterface $logger;
     private Mailer $mailer;
-    private Parameter $parameter;
+    private ParameterInterface $parameter;
     private Redirect $redirect;
     protected bool $writeToFiles = true;
 
@@ -49,7 +49,7 @@ trait TestTrait
         $this->aliases = $container->get(Aliases::class);
         $this->logger = $container->get(LoggerInterface::class);
         $this->mailer = $container->get(Mailer::class);
-        $this->parameter = $container->get(Parameter::class);
+        $this->parameter = $container->get(ParameterInterface::class);
         $this->redirect = $container->get(Redirect::class);
     }
 }

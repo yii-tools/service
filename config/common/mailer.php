@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
 use Yii\Service\Mailer;
-use Yii\Service\Parameter;
+use Yii\Service\ParameterInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Translator\TranslatorInterface;
@@ -15,7 +15,7 @@ return [
         LoggerInterface $logger,
         MailerInterface $mailer,
         TranslatorInterface $translator,
-        Parameter $parameter
+        ParameterInterface $parameter
     ) {
         $mailer = new Mailer($aliases, $logger, $mailer, $translator);
 
