@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 use Yii\Support\Assert;
 
-final class Test extends TestCase
+final class ServiceTest extends TestCase
 {
     use TestTrait;
 

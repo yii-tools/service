@@ -11,7 +11,7 @@ return [
         'aliases' => [
             '@root' => dirname(__DIR__, 2),
             '@resources' => '@root/data/resources',
-            '@runtime' => '@resources/runtime',
+            '@runtime' => '@root/data/runtime',
             '@views' => '@resources/mail',
         ],
     ],

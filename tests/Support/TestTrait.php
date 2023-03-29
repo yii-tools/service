@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Yii\Service\Mailer;
 use Yii\Service\ParameterInterface;
 use Yii\Service\Redirect;
+use Yii\Service\Translator;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Config\Config;
 use Yiisoft\Config\ConfigPaths;
@@ -24,7 +25,8 @@ trait TestTrait
     private Mailer $mailer;
     private ParameterInterface $parameter;
     private Redirect $redirect;
-    protected bool $writeToFiles = true;
+    private Translator $translator;
+    private bool $writeToFiles = true;
 
     public function tearDown(): void
     {
@@ -51,5 +53,6 @@ trait TestTrait
         $this->mailer = $container->get(Mailer::class);
         $this->parameter = $container->get(ParameterInterface::class);
         $this->redirect = $container->get(Redirect::class);
+        $this->translator = $container->get(Translator::class);
     }
 }
