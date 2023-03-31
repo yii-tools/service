@@ -25,6 +25,15 @@ final class Test extends TestCase
         $this->assertNull($this->parameter->get('app.noExist'));
     }
 
+    public function testParametersWithAliases(): void
+    {
+        $this->createContainer();
+
+        $this->aliases->set('@root', dirname(__DIR__, 2));
+
+        $this->assertDirectoryExists($this->parameter->get('app.aliases.tests'));
+    }
+
     public function testParameterNoExistsWithDefaultValue(): void
     {
         $this->createContainer();

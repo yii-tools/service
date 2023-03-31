@@ -16,10 +16,10 @@ final class Redirect
     ) {
     }
 
-    public function run(string $url): ResponseInterface
+    public function run(string $url, int $code = 302): ResponseInterface
     {
         return $this->responseFactory
-            ->createResponse(302)
+            ->createResponse($code)
             ->withHeader('Location', $this->urlGenerator->generate($url));
     }
 }
