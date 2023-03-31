@@ -36,11 +36,13 @@ final class Parameter implements ParameterInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
+        /** @var mixed $value */
         $value = ArrayHelper::getValueByPath($this->parameters, $key, $default);
 
-        return match (is_string($value)) {
-            true => $this->aliases->get($value),
-            default => $value,
-        };
+        if (is_string($value)) {
+            $value = $this->aliases->get($value);
+        }
+
+        return $value;
     }
 }
