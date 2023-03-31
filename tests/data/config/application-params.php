@@ -6,7 +6,7 @@ return [
     'app' => [
         'name' => 'Yii Demo',
         'aliases' => [
-            'tests' => '@root/tests'
+            'tests' => '@root/tests',
         ],
     ],
 ];
