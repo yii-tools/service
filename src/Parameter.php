@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yii\Service;
 
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Arrays\ArrayHelper;
 
 /**
@@ -29,12 +30,19 @@ use Yiisoft\Arrays\ArrayHelper;
  */
 final class Parameter implements ParameterInterface
 {
-    public function __construct(private array $parameters)
+    public function __construct(private array $parameters, private Aliases $aliases)
     {
     }
 
     public function get(string $key, mixed $default = null): mixed
     {
-        return ArrayHelper::getValueByPath($this->parameters, $key, $default);
+        /** @var mixed $value */
+        $value = ArrayHelper::getValueByPath($this->parameters, $key, $default);
+
+        if (is_string($value)) {
+            $value = $this->aliases->get($value);
+        }
+
+        return $value;
     }
 }

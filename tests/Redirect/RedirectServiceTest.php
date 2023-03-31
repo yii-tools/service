@@ -17,6 +17,17 @@ final class RedirectServiceTest extends TestCase
 
         $redirect = $this->redirect->run('home');
 
+        $this->assertSame(302, $redirect->getStatusCode());
+        $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
+    }
+
+    public function testRedirectWithCode200(): void
+    {
+        $this->createContainer();
+
+        $redirect = $this->redirect->run('home', 200);
+
+        $this->assertSame(200, $redirect->getStatusCode());
         $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
     }
 }
