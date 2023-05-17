@@ -21,6 +21,16 @@ final class RedirectServiceTest extends TestCase
         $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
     }
 
+    public function testRedirectWithArguments(): void
+    {
+        $this->createContainer();
+
+        $redirect = $this->redirect->run('home', 302, ['id' => 1]);
+
+        $this->assertSame(302, $redirect->getStatusCode());
+        $this->assertSame(['Location' => ['/home/index?id=1']], $redirect->getHeaders());
+    }
+
     public function testRedirectWithCode200(): void
     {
         $this->createContainer();
@@ -29,5 +39,15 @@ final class RedirectServiceTest extends TestCase
 
         $this->assertSame(200, $redirect->getStatusCode());
         $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
+    }
+
+    public function testRedirectWithQueryParams(): void
+    {
+        $this->createContainer();
+
+        $redirect = $this->redirect->run('home', 302, [], ['id' => 1]);
+
+        $this->assertSame(302, $redirect->getStatusCode());
+        $this->assertSame(['Location' => ['/home/index?id=1']], $redirect->getHeaders());
     }
 }
