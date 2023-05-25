@@ -8,5 +8,9 @@ return [
         'aliases' => [
             'tests' => '@root/tests',
         ],
+        'internal_array' => ['key' => 'value'],
+        'internal_bool' => true,
+        'internal_int' => 1,
+        'internal_null' => null,
     ],
 ];

@@ -26,6 +26,11 @@ trait TestTrait
     private Redirect $redirect;
     protected bool $writeToFiles = true;
 
+    public function setup(): void
+    {
+        $this->createContainer();
+    }
+
     public function tearDown(): void
     {
         unset($this->aliases, $this->logger, $this->mailer, $this->parameter, $this->redirect);

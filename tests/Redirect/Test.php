@@ -7,14 +7,12 @@ namespace Yii\Service\Tests\Redirect;
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 
-final class RedirectServiceTest extends TestCase
+final class Test extends TestCase
 {
     use TestTrait;
 
     public function testRedirect(): void
     {
-        $this->createContainer();
-
         $redirect = $this->redirect->run('home');
 
         $this->assertSame(302, $redirect->getStatusCode());
@@ -23,8 +21,6 @@ final class RedirectServiceTest extends TestCase
 
     public function testRedirectWithArguments(): void
     {
-        $this->createContainer();
-
         $redirect = $this->redirect->run('home', 302, ['id' => 1]);
 
         $this->assertSame(302, $redirect->getStatusCode());
@@ -33,8 +29,6 @@ final class RedirectServiceTest extends TestCase
 
     public function testRedirectWithCode200(): void
     {
-        $this->createContainer();
-
         $redirect = $this->redirect->run('home', 200);
 
         $this->assertSame(200, $redirect->getStatusCode());
@@ -43,8 +37,6 @@ final class RedirectServiceTest extends TestCase
 
     public function testRedirectWithQueryParams(): void
     {
-        $this->createContainer();
-
         $redirect = $this->redirect->run('home', 302, [], ['id' => 1]);
 
         $this->assertSame(302, $redirect->getStatusCode());

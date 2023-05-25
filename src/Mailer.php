@@ -16,6 +16,21 @@ use Yiisoft\Translator\TranslatorInterface;
 use function basename;
 use function mime_content_type;
 
+/**
+ * Provides a way to send email messages.
+ *
+ * ```php
+ * $mailer
+ *     ->attachments(['@resources/attachment/test.txt'])
+ *     ->from('admin@example.com')
+ *     ->layout(['html' => 'contact'])
+ *     ->signatureImage('@resources/attachment/test.txt')
+ *     ->signatureText('Signature')
+ *     ->subject('Test subject')
+ *     ->viewPath('@views')
+ *     ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username']);
+ * ```
+ */
 final class Mailer
 {
     /** @psalm-var string[] */

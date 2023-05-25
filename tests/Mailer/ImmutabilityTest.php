@@ -13,8 +13,6 @@ final class ImmutabilityTest extends TestCase
 
     public function testImmutability(): void
     {
-        $this->createContainer();
-
         $mailer = $this->mailer;
 
         $this->assertNotSame($mailer, $mailer->attachments([]));
