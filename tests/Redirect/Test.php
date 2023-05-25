@@ -7,7 +7,7 @@ namespace Yii\Service\Tests\Redirect;
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 
-final class RedirectServiceTest extends TestCase
+final class Test extends TestCase
 {
     use TestTrait;
 
