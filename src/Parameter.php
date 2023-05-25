@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Yii\Service;
 
+use RuntimeException;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Arrays\ArrayHelper;
+
+use function is_array;
+use function is_bool;
+use function is_string;
 
 /**
  * Parameter provides a way to get application Parameter defined in config/parameters.php.
@@ -44,5 +49,22 @@ final class Parameter implements ParameterInterface
         }
 
         return $value;
+    }
+
+    public function getCastString(string $key, mixed $default = null): string
+    {
+        /** @psalm-var mixed $value */
+        $value = $this->get($key, $default);
+
+        if (is_array($value)) {
+            throw new RuntimeException(
+                'Unable to cast array to string. Please use `get()` method instead of `getCastString()`.'
+            );
+        }
+
+        return match (true) {
+            is_bool($value) => $value ? 'true' : 'false',
+            default => (string) $value,
+        };
     }
 }

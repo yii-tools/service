@@ -14,8 +14,6 @@ final class Test extends TestCase
 
     public function testMailer(): void
     {
-        $this->createContainer();
-
         $this->assertTrue(
             $this->mailer
                 ->attachments(['@resources/attachment/test.txt'])
@@ -49,8 +47,6 @@ final class Test extends TestCase
 
     public function testMailerWithEmptySignatureImage(): void
     {
-        $this->createContainer();
-
         $this->assertTrue(
             $this->mailer
                 ->attachments(['@resources/attachment/test.txt'])
@@ -66,8 +62,6 @@ final class Test extends TestCase
 
     public function testMailerWithTranslatorCategory(): void
     {
-        $this->createContainer();
-
         $this->assertTrue(
             $this->mailer
                 ->attachments(['@resources/attachment/test.txt'])

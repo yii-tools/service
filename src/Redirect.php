@@ -9,6 +9,13 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Yiisoft\Router\UrlGeneratorInterface;
 
+/**
+ * Provides a way to redirect to a URL.
+ *
+ * ```php
+ * $response = $redirect->run('site/index');
+ * ```
+ */
 final class Redirect
 {
     public function __construct(

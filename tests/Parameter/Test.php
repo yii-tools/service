@@ -11,6 +11,33 @@ final class Test extends TestCase
 {
     use TestTrait;
 
+    public function testGetCastString(): void
+    {
+        $this->createContainer();
+
+        $this->assertSame('value', $this->parameter->getCastString('app.internal_array.key'));
+        $this->assertSame('1', $this->parameter->getCastString('app.internal_int'));
+        $this->assertSame('true', $this->parameter->getCastString('app.internal_bool'));
+        $this->assertSame('', $this->parameter->getCastString('app.internal_null'));
+    }
+
+    public function testGetCastStringException(): void
+    {
+        $this->createContainer();
+
+        $this->expectExceptionMessage(
+            'Unable to cast array to string. Please use `get()` method instead of `getCastString()',
+        );
+        $this->parameter->getCastString('app.internal_array');
+    }
+
+    public function testGetCastStringWithDefaultValue(): void
+    {
+        $this->createContainer();
+
+        $this->assertSame('default', $this->parameter->getCastString('app.noExist', 'default'));
+    }
+
     public function testParameterExists(): void
     {
         $this->createContainer();
