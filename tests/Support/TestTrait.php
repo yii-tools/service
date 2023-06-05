@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Yii\Service\Mailer;
 use Yii\Service\ParameterInterface;
 use Yii\Service\Redirect;
+use Yii\Service\ViewTemplateRenderer;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Config\Config;
 use Yiisoft\Config\ConfigPaths;
@@ -24,6 +25,7 @@ trait TestTrait
     private Mailer $mailer;
     private ParameterInterface $parameter;
     private Redirect $redirect;
+    private ViewTemplateRenderer $viewTemplateRenderer;
     protected bool $writeToFiles = true;
 
     public function setup(): void
@@ -33,7 +35,14 @@ trait TestTrait
 
     public function tearDown(): void
     {
-        unset($this->aliases, $this->logger, $this->mailer, $this->parameter, $this->redirect);
+        unset(
+            $this->aliases,
+            $this->logger,
+            $this->mailer,
+            $this->parameter,
+            $this->redirect,
+            $this->viewTemplateRenderer,
+        );
     }
 
     private function createContainer(): void
@@ -47,7 +56,7 @@ trait TestTrait
             MailerInterface::class => $this->writeToFiles ? FileMailer::class : SymfonyMailer::class,
         ];
 
-        $definitions = array_merge($config->get('di'), $mailerInterfaceOverride);
+        $definitions = array_merge($config->get('di-web'), $mailerInterfaceOverride);
         $containerConfig = ContainerConfig::create()->withDefinitions(array_merge($definitions));
         $container = new Container($containerConfig);
 
@@ -56,5 +65,6 @@ trait TestTrait
         $this->mailer = $container->get(Mailer::class);
         $this->parameter = $container->get(ParameterInterface::class);
         $this->redirect = $container->get(Redirect::class);
+        $this->viewTemplateRenderer = $container->get(ViewTemplateRenderer::class);
     }
 }
