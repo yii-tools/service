@@ -48,6 +48,7 @@ final class ViewTemplateRenderer implements ViewContextInterface
 
         return $new;
     }
+
     public function withViewPath(string $path): self
     {
         $new = clone $this;
@@ -65,7 +66,8 @@ final class ViewTemplateRenderer implements ViewContextInterface
         return $aliases;
     }
 
-    private function renderView(string $view, array $viewParameters): string {
+    private function renderView(string $view, array $viewParameters): string
+    {
         return $this->webView->withContext($this)->render($view, $viewParameters);
     }
 }
