@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Yii\Service\Mailer;
-use Yiisoft\Mailer\MailerInterface;
+use Yii\Service\MailerInterface;
 
 /** @var array $params */
 return [
