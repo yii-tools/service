@@ -31,7 +31,7 @@ use function mime_content_type;
  *     ->send('test@example.com', ['message' => 'Test body', 'username' => 'Test username']);
  * ```
  */
-final class Mailer
+final class Mailer implements \Yii\Service\MailerInterface
 {
     /** @psalm-var string[] */
     private array $attachments = [];
