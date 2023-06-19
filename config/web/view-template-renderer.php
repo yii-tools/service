@@ -16,6 +16,6 @@ return [
         'class' => ViewTemplateRenderer::class,
         'withLayoutParameters()' => [
             $params['yii-tools/service']['view-template-renderer']['layout-parameters'],
-        ]
+        ],
     ],
 ];
