@@ -6,13 +6,14 @@ use Yii\Service\Mailer;
 use Yii\Service\MailerInterface;
 
 /** @var array $params */
+
 return [
     MailerInterface::class => [
         'class' => Mailer::class,
-        'from()' => [$params['yii-tools.service.mailer.from']],
-        'signatureImage()' => [$params['yii-tools.service.mailer.signature-image']],
-        'signatureText()' => [$params['yii-tools.service.mailer.signature-text']],
-        'translatorCategory()' => [$params['yii-tools.service.mailer.translator-category']],
-        'viewPath()' => [$params['yii-tools.service.mailer.view-path']],
+        'from()' => [$params['yii-tools/service']['mailer']['from']],
+        'signatureImage()' => [$params['yii-tools/service']['mailer']['signature-image']],
+        'signatureText()' => [$params['yii-tools/service']['mailer']['signature-text']],
+        'translatorCategory()' => [$params['yii-tools/service']['mailer']['translator-category']],
+        'viewPath()' => [$params['yii-tools/service']['mailer']['view-path']],
     ],
 ];

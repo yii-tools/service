@@ -61,8 +61,10 @@
         },
         "config-plugin": {
             "application-params": "?application-params.php",
-            "di": ["common/*.php"],
-            "params": "common/params/*.php"
+            "di": "common/*.php",
+            "di-web": "web/*.php",
+            "params": "common/params/*.php",
+            "params-web": "web/params/*.php"
         },
         "config-plugin-environments": {
             "tests": {

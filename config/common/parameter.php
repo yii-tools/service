@@ -6,9 +6,8 @@ use Yii\Service\Parameter;
 use Yii\Service\ParameterInterface;
 use Yiisoft\Config\Config;
 
-/**
- * @var Config $config
- */
+/** @var Config $config */
+
 return [
     ParameterInterface::class => [
         'class' => Parameter::class,
