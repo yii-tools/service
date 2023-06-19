@@ -11,5 +11,8 @@ return [
             'translator-category' => 'app',
             'view-path' => '',
         ],
+        'view-template-renderer' => [
+            'layout-parameters' => [],
+        ],
     ],
 ];

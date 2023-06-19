@@ -3,13 +3,8 @@
 declare(strict_types=1);
 
 use Yii\Service\ViewTemplateRenderer;
-use Yiisoft\Config\Config;
 
-/**
- * @var Config $config
- * @var array $params
- */
-$params = $config->get('params-web');
+/** @var array $params */
 
 return [
     ViewTemplateRenderer::class => [
