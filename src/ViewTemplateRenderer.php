@@ -12,9 +12,9 @@ use Yiisoft\View\WebView;
 
 final class ViewTemplateRenderer implements ViewContextInterface
 {
-    private string $layout = '@layout/main.php';
+    private string $layoutFile = '';
     private array $layoutParameters = [];
-    private string $viewPath = '@views';
+    private string $viewPath = '';
 
     public function __construct(
         private readonly Aliases $aliases,
@@ -34,11 +34,19 @@ final class ViewTemplateRenderer implements ViewContextInterface
 
         $parameters = ['content' => $content, ...$layoutParameters, ...$this->layoutParameters];
 
-        $layout = $this->findAliases($this->layout);
+        $layout = $this->findAliases($this->layoutFile);
 
         $content = $this->webView->renderFile($layout, $parameters);
 
         return $this->dataResponse->createResponse($content);
+    }
+
+    public function withLayoutFile(string $layoutFile): self
+    {
+        $new = clone $this;
+        $new->layoutFile = $layoutFile;
+
+        return $new;
     }
 
     public function withLayoutParameters(array $parameters): self

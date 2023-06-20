@@ -12,7 +12,9 @@ return [
             'view-path' => '',
         ],
         'view-template-renderer' => [
+            'layout-file' => '@layout/main.php',
             'layout-parameters' => [],
+            'view-path' => '@views',
         ],
     ],
 ];

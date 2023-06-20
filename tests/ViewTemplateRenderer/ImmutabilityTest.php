@@ -15,6 +15,7 @@ final class ImmutabilityTest extends TestCase
     {
         $viewTemplateRenderer = $this->viewTemplateRenderer;
 
+        $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withLayoutFile(''));
         $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withLayoutParameters([]));
         $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withViewPath(''));
     }
