@@ -17,11 +17,11 @@ use Yiisoft\Config\Config;
 return [
     MailerInterface::class => [
         'class' => Mailer::class,
-        'from()' => [$params['yii-tools/service']['mailer']['from']],
-        'signatureImage()' => [$params['yii-tools/service']['mailer']['signature-image']],
-        'signatureText()' => [$params['yii-tools/service']['mailer']['signature-text']],
-        'translatorCategory()' => [$params['yii-tools/service']['mailer']['translator-category']],
-        'viewPath()' => [$params['yii-tools/service']['mailer']['view-path']],
+        'from()' => [$params['yii-tools/service']['mailer']['from'] ?? ''],
+        'signatureImage()' => [$params['yii-tools/service']['mailer']['signature-image'] ?? ''],
+        'signatureText()' => [$params['yii-tools/service']['mailer']['signature-text'] ?? ''],
+        'translatorCategory()' => [$params['yii-tools/service']['mailer']['translator-category'] ?? 'app'],
+        'viewPath()' => [$params['yii-tools/service']['mailer']['view-path'] ?? ''],
     ],
     ParameterInterface::class => [
         'class' => Parameter::class,
@@ -30,13 +30,13 @@ return [
     ViewTemplateRenderer::class => [
         'class' => ViewTemplateRenderer::class,
         'withLayoutFile()' => [
-            $params['yii-tools/service']['view-template-renderer']['layout-file'],
+            $params['yii-tools/service']['view-template-renderer']['layout-file'] ?? '@layout/main.php',
         ],
         'withLayoutParameters()' => [
-            $params['yii-tools/service']['view-template-renderer']['layout-parameters'],
+            $params['yii-tools/service']['view-template-renderer']['layout-parameters'] ?? [],
         ],
         'withViewPath()' => [
-            $params['yii-tools/service']['view-template-renderer']['view-path'],
+            $params['yii-tools/service']['view-template-renderer']['view-path'] ?? '@views',
         ],
     ],
 ];
