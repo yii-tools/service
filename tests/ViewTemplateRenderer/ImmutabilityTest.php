@@ -6,6 +6,7 @@ namespace Yii\Service\Tests\ViewTemplateRenderer;
 
 use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
+use Yiisoft\View\Theme;
 
 final class ImmutabilityTest extends TestCase
 {
@@ -17,6 +18,7 @@ final class ImmutabilityTest extends TestCase
 
         $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withLayoutFile(''));
         $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withLayoutParameters([]));
+        $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withTheme(new Theme()));
         $this->assertNotSame($viewTemplateRenderer, $viewTemplateRenderer->withViewPath(''));
     }
 }
