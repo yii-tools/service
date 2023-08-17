@@ -7,6 +7,7 @@ namespace Yii\Service;
 use Psr\Http\Message\ResponseInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
+use Yiisoft\View\Theme;
 use Yiisoft\View\ViewContextInterface;
 use Yiisoft\View\WebView;
 
@@ -53,6 +54,14 @@ final class ViewTemplateRenderer implements ViewContextInterface
     {
         $new = clone $this;
         $new->layoutParameters = $parameters;
+
+        return $new;
+    }
+
+    public function withTheme(Theme $theme): self
+    {
+        $new = clone $this;
+        $new->webView->setTheme($theme);
 
         return $new;
     }

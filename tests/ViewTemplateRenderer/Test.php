@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yii\Service\Tests\Support\TestTrait;
 use Yii\Support\Assert;
 use Yiisoft\DataResponse\DataResponse;
+use Yiisoft\View\Theme;
 
 final class Test extends TestCase
 {
@@ -28,6 +29,38 @@ final class Test extends TestCase
             <html>
             <head>
                     <title>Layout</title>
+            </head>
+            <body>
+
+            <h1>View</h1>
+
+            </body>
+            </html>
+
+            HTML,
+            $dataResponse->getData(),
+        );
+    }
+
+    public function testTheme(): void
+    {
+        $this->aliases->set('@layout', dirname(__DIR__) . '/data/resources/view');
+
+        /** @var DataResponse $dataResponse */
+        $dataResponse = $this->viewTemplateRenderer
+            ->withViewPath('@resources/view')
+            ->withTheme(
+                new Theme(
+                    [$this->aliases->get('@resources/view') => $this->aliases->get('@resources/view/theme')]
+                )
+            )->render('view', ['title' => 'View'], ['title' => 'View']);
+
+        Assert::equalsWithoutLE(
+            <<<HTML
+            <!DOCTYPE html>
+            <html>
+            <head>
+                    <title>Main Theme</title>
             </head>
             <body>
 
