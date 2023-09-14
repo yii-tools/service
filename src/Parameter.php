@@ -72,4 +72,17 @@ final class Parameter implements ParameterInterface
     {
         ArrayHelper::setValueByPath($this->parameters, $key, $value);
     }
+
+    public function add(string $key, mixed $value): void
+    {
+        $currentValue = $this->get($key, []);
+
+        if (is_array($currentValue) === false) {
+            throw new RuntimeException('Unable to add value to non-array parameter.');
+        }
+
+        $currentValue[] = $value;
+
+        $this->set($key, $currentValue);
+    }
 }
