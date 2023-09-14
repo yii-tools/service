@@ -11,7 +11,7 @@ final class Test extends TestCase
 {
     use TestTrait;
 
-    public function testRedirect(): void
+    public function testRun(): void
     {
         $redirect = $this->redirect->run('home');
 
@@ -19,7 +19,7 @@ final class Test extends TestCase
         $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
     }
 
-    public function testRedirectWithArguments(): void
+    public function testWithArguments(): void
     {
         $redirect = $this->redirect->run('home', 302, ['id' => 1]);
 
@@ -27,7 +27,7 @@ final class Test extends TestCase
         $this->assertSame(['Location' => ['/home/index?id=1']], $redirect->getHeaders());
     }
 
-    public function testRedirectWithCode200(): void
+    public function testWithCode200(): void
     {
         $redirect = $this->redirect->run('home', 200);
 
@@ -35,7 +35,7 @@ final class Test extends TestCase
         $this->assertSame(['Location' => ['/home/index']], $redirect->getHeaders());
     }
 
-    public function testRedirectWithQueryParams(): void
+    public function testWithQueryParams(): void
     {
         $redirect = $this->redirect->run('home', 302, [], ['id' => 1]);
 
