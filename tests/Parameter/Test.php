@@ -11,6 +11,24 @@ final class Test extends TestCase
 {
     use TestTrait;
 
+    public function testAdd(): void
+    {
+        $this->createContainer();
+
+        $this->parameter->add('app.menu.guest', 'Home');
+
+        $this->assertSame(['Home'], $this->parameter->get('app.menu.guest'));
+    }
+
+    public function testException(): void
+    {
+        $this->createContainer();
+
+        $this->expectExceptionMessage('Unable to add value to non-array parameter.');
+
+        $this->parameter->add('app.name', 'Yii Demo');
+    }
+
     public function testGetCastString(): void
     {
         $this->createContainer();

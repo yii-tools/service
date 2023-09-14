@@ -10,6 +10,14 @@ namespace Yii\Service;
 interface ParameterInterface
 {
     /**
+     * Adds a parameter to params.
+     *
+     * @param string $key The key of the parameter to add.
+     * @param mixed $value The value of the parameter to add.
+     */
+    public function add(string $key, mixed $value): void;
+
+    /**
      * Returns a parameter defined in params.
      *
      * @param string $key The key of the parameter to return.
