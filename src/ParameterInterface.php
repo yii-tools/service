@@ -26,4 +26,12 @@ interface ParameterInterface
      * @param mixed $default The default value to return if the parameter does not exist.
      */
     public function getCastString(string $key, mixed $default = null): string;
+
+    /**
+     * Sets a parameter defined in params.
+     *
+     * @param string $key The key of the parameter to set.
+     * @param mixed $value The value of the parameter to set.
+     */
+    public function set(string $key, mixed $value): void;
 }

@@ -35,7 +35,7 @@ use function is_string;
  */
 final class Parameter implements ParameterInterface
 {
-    public function __construct(private array $parameters, private Aliases $aliases)
+    public function __construct(private array $parameters, private readonly Aliases $aliases)
     {
     }
 
@@ -66,5 +66,10 @@ final class Parameter implements ParameterInterface
             is_bool($value) => $value ? 'true' : 'false',
             default => (string) $value,
         };
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        ArrayHelper::setValueByPath($this->parameters, $key, $value);
     }
 }

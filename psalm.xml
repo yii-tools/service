@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <psalm
   errorLevel="1"
   findUnusedBaselineEntry="true"
@@ -11,8 +10,8 @@
 >
   <projectFiles>
     <directory name="src" />
-      <ignoreFiles>
-        <directory name="vendor" />
-    </ignoreFiles>
   </projectFiles>
+  <issueHandlers>
+    <MixedAssignment errorLevel="suppress" />
+  </issueHandlers>
 </psalm>

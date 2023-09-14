@@ -38,33 +38,42 @@ final class Test extends TestCase
         $this->assertSame('default', $this->parameter->getCastString('app.noExist', 'default'));
     }
 
-    public function testParameterExists(): void
+    public function testExists(): void
     {
         $this->createContainer();
 
         $this->assertSame('Yii Demo', $this->parameter->get('app.name'));
     }
 
-    public function testParameterNoExists(): void
+    public function testNoExists(): void
     {
         $this->createContainer();
 
         $this->assertNull($this->parameter->get('app.noExist'));
     }
 
-    public function testParametersWithAliases(): void
+    public function testNoExistsWithDefaultValue(): void
+    {
+        $this->createContainer();
+
+        $this->assertEmpty($this->parameter->get('app.noExist', ''));
+    }
+
+    public function testSet(): void
+    {
+        $this->createContainer();
+
+        $this->parameter->set('app.name', 'New Name');
+
+        $this->assertSame('New Name', $this->parameter->get('app.name'));
+    }
+
+    public function testWithAliases(): void
     {
         $this->createContainer();
 
         $this->aliases->set('@root', dirname(__DIR__, 2));
 
         $this->assertDirectoryExists($this->parameter->get('app.aliases.tests'));
-    }
-
-    public function testParameterNoExistsWithDefaultValue(): void
-    {
-        $this->createContainer();
-
-        $this->assertEmpty($this->parameter->get('app.noExist', ''));
     }
 }

@@ -10,6 +10,7 @@ on:
       - 'psalm.xml'
 
   push:
+    branches: ['main']
     paths-ignore:
       - 'docs/**'
       - 'README.md'
@@ -23,7 +24,10 @@ name: build
 
 jobs:
   phpunit:
-    uses: yiisoft/actions/.github/workflows/phpunit.yml@master
+    uses: php-forge/actions/.github/workflows/phpunit.yml@main
+    secrets:
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     with:
       extensions: fileinfo, intl
       os: >-

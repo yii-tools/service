@@ -10,6 +10,7 @@ on:
       - 'phpunit.xml.dist'
 
   push:
+    branches: ['main']
     paths-ignore:
       - 'docs/**'
       - 'README.md'
@@ -23,7 +24,9 @@ name: static analysis
 
 jobs:
   psalm:
-    uses: yiisoft/actions/.github/workflows/psalm.yml@master
+    uses: php-forge/actions/.github/workflows/psalm.yml@main
+    secrets:
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
     with:
       os: >-
         ['ubuntu-latest']

@@ -12,14 +12,14 @@ final class Test extends TestCase
 {
     use TestTrait;
 
-    public function testMailer(): void
+    public function testEmptySignatureImage(): void
     {
         $this->assertTrue(
             $this->mailer
                 ->attachments(['@resources/attachment/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
-                ->signatureImage('@resources/attachment/test.txt')
+                ->signatureImage('')
                 ->signatureText('Signature')
                 ->subject('Test subject')
                 ->viewPath('@views')
@@ -27,7 +27,7 @@ final class Test extends TestCase
         );
     }
 
-    public function testMailerFailed(): void
+    public function testFailed(): void
     {
         $this->writeToFiles = false;
 
@@ -45,14 +45,14 @@ final class Test extends TestCase
         $this->assertCount(2, Assert::inaccessibleProperty($this->logger, 'messages'));
     }
 
-    public function testMailerWithEmptySignatureImage(): void
+    public function testRun(): void
     {
         $this->assertTrue(
             $this->mailer
                 ->attachments(['@resources/attachment/test.txt'])
                 ->from('admin@example.com')
                 ->layout(['html' => 'contact'])
-                ->signatureImage('')
+                ->signatureImage('@resources/attachment/test.txt')
                 ->signatureText('Signature')
                 ->subject('Test subject')
                 ->viewPath('@views')
@@ -60,7 +60,7 @@ final class Test extends TestCase
         );
     }
 
-    public function testMailerWithTranslatorCategory(): void
+    public function testTranslatorCategory(): void
     {
         $this->assertTrue(
             $this->mailer
