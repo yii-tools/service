@@ -29,6 +29,7 @@ jobs:
       AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     with:
+      extensions: fileinfo, intl
       os: >-
         ['ubuntu-latest', 'windows-latest']
       php: >-
